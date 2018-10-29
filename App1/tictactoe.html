@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tic-Tac-Toe Battle</title>
+        <style>
+            body {
+                background-color: darkolivegreen;
+            }
+            
+            h1 {
+                text-align: center;
+                color: floralwhite;
+                font-family: verdana, sans-serif;
+            }
+            h3 {
+                text-align: center;
+                color: yellow;
+                font-family: verdana, sans-serif;
+            }
+            div {
+                display: flex;
+                background-color: darkslategrey;
+                padding: 2%;
+                justify-content: center;
+            }
+            img {
+                padding: 2%;
+            }
+         
+        </style>
+        <script>
+            let turn = false;
+            let vertical1 = 0;
+            let vertical2 = 0;
+            let vertical3 = 0;
+            let hori1 = 0;
+            let hori2 = 0;
+            let hori3 = 0;
+            let diag1 = 0;
+            let diag2 = 0;
+            function makeMove(square, buttonName) {
+                if (turn == false) {
+                    document.getElementById(square).src='ex.png';
+                    turn = true;
+                    document.getElementById("turn").innerHTML = "IT'S O'S TURN.";
+                    checkScore(square, false);
+                }
+                else  {
+                    document.getElementById(square).src='o.png';
+                    turn =false;
+                    document.getElementById("turn").innerHTML = "IT'S X'S TURN.";
+                    checkScore(square, true);
+                }
+                document.getElementById(buttonName).disabled = true;
+            }
+            function checkScore(square, whichPlayer) {
+                if (square == "r1c1" || square == "r1c2" || square == "r1c3") {
+                    hori1 += changeScore(whichPlayer);
+                }
+                else if (square == "r2c1" || square == "r2c2" || square == "r2c3") {
+                    hori2 += changeScore(whichPlayer);
+                }
+                else if (square == "r3c1" || square == "r3c2" || square == "r3c3") {
+                    hori3 += changeScore(whichPlayer);
+                }
+                if (square == "r1c1" || square == "r2c1" || square == "r3c1") {
+                    vertical1 += changeScore(whichPlayer);
+                }
+                else if (square == "r1c2" || square == "r2c2" || square == "r3c2") {
+                    vertical2 += changeScore(whichPlayer);
+                }
+                else if (square == "r1c3" || square == "r2c3" || square == "r3c3") {
+                    vertical3 += changeScore(whichPlayer);
+                }
+                if (square == "r1c1" || square == "r2c2" || square == "r3c3") {
+                    diag1 += changeScore(whichPlayer);
+                }
+                if (square == "r1c3" || square == "r2c2" || square == "r3c1") {
+                    diag2 += changeScore(whichPlayer);                
+                }
+                if (hori1 == 3 || hori2 == 3 || hori3 == 3 
+                   || vertical1 == 3 || vertical2 == 3 || vertical3 == 3
+                   || diag1 == 3 || diag2 == 3) {
+                    document.getElementById("turn").innerHTML = "X WINS!!!!";
+                    disableAllButtons();
+                }
+                else if (hori1 == -3 || hori2 == -3 || hori3 == -3 
+                   || vertical1 == -3 || vertical2 == -3 || vertical3 == -3
+                   || diag1 == -3 || diag2 == -3) {
+                    document.getElementById("turn").innerHTML = "O WINS!!!!";
+                    disableAllButtons();
+                }
+            }
+            
+            function changeScore(whichPlayer) {
+                if (whichPlayer == true) { //A true value represents the O player
+                        return -1;
+                    }
+                    else { //False represents X
+                        return 1;
+                        }
+            }
+            
+            function disableAllButtons() {
+                document.getElementById("button1").disabled = true;
+                document.getElementById("button2").disabled = true;
+                document.getElementById("button3").disabled = true;
+                document.getElementById("button4").disabled = true;
+                document.getElementById("button5").disabled = true;
+                document.getElementById("button6").disabled = true;
+                document.getElementById("button7").disabled = true;
+                document.getElementById("button8").disabled = true;
+                document.getElementById("button9").disabled = true;
+            }
+            
+            function resetGame() {
+                turn = false;
+                vertical1 = 0;
+                vertical2 = 0;
+                vertical3 = 0;
+                hori1 = 0;
+                hori2 = 0;
+                hori3 = 0;
+                diag1 = 0;
+                diag2 = 0;
+                document.getElementById("button1").disabled = false;
+                document.getElementById("button2").disabled = false;
+                document.getElementById("button3").disabled = false;
+                document.getElementById("button4").disabled = false;
+                document.getElementById("button5").disabled = false;
+                document.getElementById("button6").disabled = false;
+                document.getElementById("button7").disabled = false;
+                document.getElementById("button8").disabled = false;
+                document.getElementById("button9").disabled = false;
+                document.getElementById("r1c1").src = 'empty.png';
+                document.getElementById("r1c2").src = 'empty.png';
+                document.getElementById("r1c3").src = 'empty.png';
+                document.getElementById("r2c1").src = 'empty.png';
+                document.getElementById("r2c2").src = 'empty.png';
+                document.getElementById("r2c3").src = 'empty.png';
+                document.getElementById("r3c1").src = 'empty.png';
+                document.getElementById("r3c2").src = 'empty.png';
+                document.getElementById("r3c3").src = 'empty.png';
+                document.getElementById("turn").innerHTML = "IT'S X'S TURN";
+            }
+        </script>
+    </head>
+    
+    <body>
+        <h1>Tic-Tac-Toe Battle</h1>
+        <h3>GET THREE IN A ROW</h3>
+        <!--Bunch of images that change when pieces are added-->
+        <div>
+            <img id="r1c1" src="empty.png" style="width:28%; height:28%;">
+            <img id="r1c2" src="empty.png" style="width:28%; height:28%;">
+            <img id="r1c3" src="empty.png" style="width:28%; height:28%;">
+        </div>
+        <div>
+            <table style="width:100%">
+                <tr>
+                    <td align="center"><button id="button1" onclick="makeMove('r1c1', 'button1');">PLACE</button></td>
+                    <td align="center"><button id="button2" onclick="makeMove('r1c2', 'button2');">PLACE</button></td>
+                    <td align="center"><button id="button3" onclick="makeMove('r1c3', 'button3');">PLACE</button></td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <img id="r2c1" src="empty.png" style="width:28%; height:28%;">
+            <img id="r2c2" src="empty.png" style="width:28%; height:28%;">
+            <img id="r2c3" src="empty.png" style="width:28%; height:28%;">
+        </div>
+        <div>
+            <table style="width:100%">
+                <tr>
+                    <td align="center"><button id="button4" onclick="makeMove('r2c1', 'button4');">PLACE</button></td>
+                    <td align="center"><button id="button5" onclick="makeMove('r2c2', 'button5');">PLACE</button></td>
+                    <td align="center"><button id="button6" onclick="makeMove('r2c3', 'button6');">PLACE</button></td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <img id="r3c1" src="empty.png" style="width:28%; height:28%;">
+            <img id="r3c2" src="empty.png" style="width:28%; height:28%;">
+            <img id="r3c3" src="empty.png" style="width:28%; height:28%;">
+        </div>
+        <div>
+            <table style="width:100%">
+                <tr>
+                    <td align="center"><button id="button7" onclick="makeMove('r3c1', 'button7');">PLACE</button></td>
+                    <td align="center"><button id="button8" onclick="makeMove('r3c2', 'button8');">PLACE</button></td>
+                    <td align="center"><button id="button9" onclick="makeMove('r3c3', 'button9');">PLACE</button></td>
+                </tr>
+            </table>
+        </div>
+        <h3 id="turn">IT'S X'S TURN.</h3>
+        <button onclick="resetGame();">Reset Game</button>
+    </body>
+    
+</html>
